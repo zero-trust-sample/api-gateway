@@ -1,0 +1,19 @@
+dependencies {
+    implementation("org.springframework:spring-context")
+    implementation("org.springframework:spring-web")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+    implementation("org.apache.commons:commons-lang3:3.13.0")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+
+    testImplementation libs.junitJupiterApi
+    testRuntimeOnly libs.junitJupiterEngine
+    testImplementation libs.springBootStarterTest
+    testImplementation libs.mockitoCore
+}
+
+test {
+    useJUnitPlatform()
+}

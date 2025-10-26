@@ -1,0 +1,33 @@
+server.shutdown: graceful
+
+spring:
+  application:
+    name: "api-gateway"
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
+management:
+  server:
+    port: 9000
+  endpoints:
+    web:
+      exposure:
+        include: health,loggers,prometheus,threaddump,admin,healthCheck
+      base-path: /
+      path-mapping:
+        prometheus: metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+  health:
+    readinessState:
+      enabled: true
+    livenessState:
+      enabled: true
