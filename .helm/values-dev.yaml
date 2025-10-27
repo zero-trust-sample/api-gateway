@@ -1,0 +1,30 @@
+deployment:
+  name: api-gateway
+  replicas: 1
+
+image:
+  repository: zero-trust-api-gateway
+  tag: latest
+
+service:
+  name: api-gateway
+  type: NodePort
+
+default_requests:
+  memory: "384Mi"
+  cpu: "75m"
+
+
+env_vars:
+  spring_profiles_active:
+  google_application_credentials:
+
+gcs:
+  secret_name: api-gateway
+  secret_key:
+
+domains:
+  frontend:
+  backend:
+
+environment:

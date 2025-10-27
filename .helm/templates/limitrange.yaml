@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: default-resource-requests
+  namespace: {{ .Values.environment }}  
+spec:
+  limits:
+  - defaultRequest:
+      cpu: {{ .Values.default_requests.cpu }}         
+      memory: {{ .Values.default_requests.memory }}    
+    type: Container        

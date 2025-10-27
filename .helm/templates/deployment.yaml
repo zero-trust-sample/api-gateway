@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.name }}
+    spec:
+      containers:
+      - name: {{ .Values.deployment.name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: {{ .Values.env_vars.spring_profiles_active }}
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: {{ .Values.env_vars.google_application_credentials }}
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          initialDelaySeconds: 30
+          httpGet:
+            path: /health
+            port: 9000
+        livenessProbe:
+          initialDelaySeconds: 30
+          httpGet:
+            path: /health
+            port: 9000
+        volumeMounts:
+        - name: gcp-storage-key
+          mountPath: /app/resources/gcs.json
+          subPath: gcs.json
+          readOnly: true
+      volumes:
+      - name: gcp-storage-key
+        secret:
+          secretName: {{ .Values.gcs.secret_name }}

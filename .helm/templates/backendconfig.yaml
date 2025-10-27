@@ -1,0 +1,12 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: "{{ .Values.deployment.name }}-hc"
+spec:
+  timeoutSec: 300
+  healthCheck:
+    initialDelaySeconds: 60
+    timeoutSec: 15
+    type: HTTP
+    requestPath: /health
+    port: 9000
