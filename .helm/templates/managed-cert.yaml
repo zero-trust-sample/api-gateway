@@ -1,3 +1,4 @@
+{{- if and .Values.domains.frontend .Values.domains.backend }}
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
@@ -6,3 +7,4 @@ spec:
   domains:
     - {{ .Values.domains.frontend }}
     - {{ .Values.domains.backend }}
+{{- end }}
