@@ -1,4 +1,4 @@
-name: release-dev
+name: release-classic
 
 on:
   push:
@@ -7,13 +7,13 @@ on:
   workflow_dispatch:
 
 env:
-  NAMESPACE: "dev"
+  NAMESPACE: "classic"
   IMAGE_NAME: "api-gateway"
 
 jobs:
   build:
     runs-on: ubuntu-22.04
-    environment: dev
+    environment: classic
     outputs:
       sha_short: ${{ steps.vars.outputs.sha_short }}
     steps:
@@ -43,7 +43,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-22.04
-    environment: dev
+    environment: classic
     env:
       SHA_SHORT: ${{ needs.build.outputs.sha_short }}
     steps:
@@ -61,7 +61,7 @@ jobs:
           install_components: "gke-gcloud-auth-plugin"
       
       - name: Setup k8s connection
-        run: gcloud container clusters get-credentials secure-cluster --zone europe-west1-b --project zero-trust-diploma-2025
+        run: gcloud container clusters get-credentials classic-cluster --zone europe-west1-b --project classic-architecture-2025
 
       - name: Prepare Helm
         run: helm dependency build .helm/
